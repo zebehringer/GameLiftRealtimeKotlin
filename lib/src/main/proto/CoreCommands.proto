@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+package com.gamelift.rt.proto;
+
+//:access=internal
+//:dontdeserialize
+message LoginCommand {
+    string playerSessionId = 1;
+    int32 clientVersion = 2;
+}
+
+//:access=internal
+//:dontserialize
+message LoginResult {
+    bool success = 1;
+    string reconnectToken = 2;
+    int32 peerId = 3;
+    int32 fastPort = 4;
+    bytes caCert = 5;
+    string connectToken = 6;
+}
+
+//:access=internal
+//:dontdeserialize
+message PingCommand {
+}
+
+//:access=internal
+//:dontserialize
+message PingResult {
+}
+
+//:access=internal
+//:dontdeserialize
+message VerifyIdentityCommand {
+    int32 peerId = 1;
+    string connectToken = 2;
+}
+
+//:access=internal
+//:dontserialize
+message VerifyIdentityResult {
+    bool success = 1;
+    int32 peerId = 2;
+}
+
+//:access=internal
+message UDPConnectMessage {
+}
+
+//:access=internal
+//:dontserialize
+message PlayerConnectMessage {
+    int32 peerId = 1;
+}
+
+//:access=internal
+//:dontserialize
+message PlayerDisconnectMessage {
+    int32 peerId = 1;
+}

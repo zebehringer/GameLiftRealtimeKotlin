@@ -1,0 +1,50 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10"
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+subprojects {
+    repositories {
+        mavenCentral()
+    }
+}
+
+allprojects {
+    pluginManager.withPlugin('kotlin') {
+        dependencies {
+            // Align versions of all Kotlin components
+            implementation platform('org.jetbrains.kotlin:kotlin-bom')
+
+            // Use the Kotlin JDK 8 standard library.
+            implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
+
+            // This dependency is used internally, and not exposed to consumers on their own compile classpath.
+            implementation 'com.google.guava:guava:29.0-jre'
+
+            // This dependency is exported to consumers, that is to say found on their compile classpath.
+            api 'org.apache.commons:commons-math3:3.6.1'
+        }
+
+        java {
+            sourceCompatibility = JavaVersion.VERSION_11
+            targetCompatibility = JavaVersion.VERSION_11
+        }
+
+        compileKotlin {
+            kotlinOptions.jvmTarget = "11"
+        }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

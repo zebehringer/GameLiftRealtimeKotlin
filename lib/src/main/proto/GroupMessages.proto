@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package com.gamelift.rt.proto;
+
+message JoinGroup {
+    int32 group = 1;
+}
+
+message LeaveGroup {
+    int32 group = 1;
+}
+
+message RequestGroupMembership {
+    int32 group = 1;
+}
+
+message GroupMembershipUpdate {
+    int32 group = 1;
+    repeated int32 players = 2;
+}

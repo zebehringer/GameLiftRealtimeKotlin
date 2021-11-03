@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package com.gamelift.rt.proto;
+
+import 'proto/CoreCommands.proto';
+import 'proto/GroupMessages.proto';
+
+//:access=internal
+//:deserialize=DeserializeLengthDelimited
+message Packet {
+    sint32 opCode = 1;
+    int32 sequenceNumber = 2;
+
+    int32 targetPlayer = 3;
+    int32 targetGroup = 4;
+    int32 sender = 5;
+    bool reliable = 6;
+
+    // Version of the Realtime Client (i.e. NOT the customer's game)
+    int32 clientVersion = 7;
+
+    // payload is for customer-provided blob-style data that is not modeled in anyway and simply passed through
+    //:deserialize=instance.ReadPayload(stream)
+    //:serialize=instance.WritePayload(stream);
+    bytes payload = 15;
+
+    // Packet can contain one optional inner message
+    oneof message {
+        // General Commands
+        LoginCommand login = 30;
+        LoginResult loginResult = 31;
+        PingCommand ping = 32;
+        PingResult pingResult = 33;
+        VerifyIdentityCommand verifyIdentity = 37;
+        VerifyIdentityResult verifyIdentityResult = 38;
+
+        // Connect Commands
+        UDPConnectMessage udpConnect= 34;
+        PlayerConnectMessage playerConnect = 35;
+        PlayerDisconnectMessage playerDisconnect = 36;
+
+        // Group Related Commands
+        JoinGroup joinGroup = 40;
+        LeaveGroup leaveGroup = 41;
+        RequestGroupMembership requestGroupMembership = 42;
+        GroupMembershipUpdate groupMembershipUpdate = 43;
+    }
+}
